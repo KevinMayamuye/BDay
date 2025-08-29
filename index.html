@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/317/317737.png" type="image/png">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to bottom, #fbc2eb, #a6c1ee);
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .card {
+      position: relative;
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      z-index: 1;
+    }
+
+    .card h1 {
+      color: #7b2cbf;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: #555;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: linear-gradient(to right, #ff5f6d, #d64b93);
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* Balloon */
+    .balloon {
+      position: absolute;
+      top: -70px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 65px;
+      background: #ff4fa7;
+      border-radius: 50%;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .balloon::after {
+      content: "";
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 30px;
+      background: #555;
+    }
+
+    @keyframes float {
+      0%   { transform: translate(-50%, 0); }
+      50%  { transform: translate(-50%, -15px); }
+      100% { transform: translate(-50%, 0); }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: absolute;
+      width: 8px;
+      height: 14px;
+      background: red;
+      top: -20px;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Popup */
+    .popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .popup.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .popup-content {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+
+    .popup textarea {
+      width: 100%;
+      height: 80px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 8px;
+      resize: none;
+      font-family: inherit;
+    }
+
+    .popup button {
+      margin-top: 10px;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(to right, #ff5f6d, #d64b93);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="balloon"></div>
+    <h1>🎉 Happy Birthday Reedy! 🎉</h1>
+    <p>Wishing you love, laughter, and all your favorite things today and always 💖. Have a Good one! From me to you, Your favourite Ghost</p>
+    <div class="btn" id="wishBtn">🎂 Make a Wish</div>
+  </div>
+
+  <!-- Wish Popup -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <h2>✨ Make a Wish ✨</h2>
+      <form id="wishForm" method="POST" action="mailto:your-email@example.com" enctype="text/plain">
+        <textarea name="wish" id="wishInput" placeholder="Type your wish here..."></textarea>
+        <br>
+        <button type="submit">Send Wish</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Confetti pieces -->
+  <script>
+    const colors = ["#ff595e", "#ffca3a", "#8ac926", "#1982c4", "#6a4c93"];
+    for (let i = 0; i < 40; i++) {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti");
+      confetti.style.left = Math.random() * 100 + "vw";
+      confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDuration = 2 + Math.random() * 3 + "s";
+      document.body.appendChild(confetti);
+    }
+
+    // Popup logic
+    const wishBtn = document.getElementById("wishBtn");
+    const popup = document.getElementById("popup");
+
+    wishBtn.addEventListener("click", () => {
+      popup.classList.add("active");
+    });
+
+    // Close popup when clicking outside
+    popup.addEventListener("click", (e) => {
+      if (e.target === popup) {
+        popup.classList.remove("active");
+      }
+    });
+  </script>
+
+</body>
+</html>
